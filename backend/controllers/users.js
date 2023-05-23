@@ -42,6 +42,7 @@ module.exports.login = (req, res, next) => {
       res.cookie('jwtToken', token, {
         maxAge: 3600000,
         httpOnly: true,
+        domain: 'penstagram.nomoredomains.monster',
         sameSite: true,
       });
       res.send(getUserDto(user));
