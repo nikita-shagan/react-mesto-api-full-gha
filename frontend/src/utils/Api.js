@@ -3,10 +3,10 @@ class Api {
     this._baseUrl = baseUrl;
   }
 
-  setHeaders() {
+  setHeaders(token) {
     this._headers = {
       'Content-Type': 'application/json',
-      'authorization': localStorage.getItem('token')
+      'authorization': token
     }
   }
 
