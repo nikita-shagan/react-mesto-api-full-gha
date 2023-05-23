@@ -55,7 +55,7 @@ function App() {
         handleTokenCheck()
             .then((res) => {
                 if (res) {
-                    handleLogin(res.data.email)
+                    handleLogin(res.email)
                     navigate('/main', {replace: true})
                     return Promise.all([api.getUserInfo(), api.getInitialCards()])
                 }
