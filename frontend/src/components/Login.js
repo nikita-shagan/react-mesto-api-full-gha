@@ -11,9 +11,13 @@ const Login = ({ handleLogin }) => {
             return;
         }
         auth.authorize(email, password)
-            .then(() => {
-                handleLogin(email);
-                navigate('/main', {replace: true});
+            .then((data) => {
+                if (data && data.token) {
+                    handleLogin(email);
+                    navigate('/main', {replace: true});
+                } else {
+                    alert("Неверный логин или пароль")
+                }
             })
             .catch(err => console.log(err));
     }

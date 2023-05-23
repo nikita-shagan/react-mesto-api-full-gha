@@ -39,12 +39,7 @@ module.exports.login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      res.cookie('jwtToken', token, {
-        maxAge: 3600000,
-        httpOnly: true,
-        domain: 'penstagram.nomoredomains.monster',
-      });
-      res.send(getUserDto(user));
+      res.send({ token });
     })
     .catch(next);
 };
