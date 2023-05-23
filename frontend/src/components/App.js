@@ -30,9 +30,7 @@ function App() {
     const [loggedIn, setLoggedIn] = React.useState(false);
     const [email, setEmail] = React.useState('');
 
-    const navigate = useNavigate();
-
-    const handleLogin = (email) => {
+    const handleLogin = (email, token) => {
         setLoggedIn(true);
         setEmail(email);
     }
@@ -46,25 +44,25 @@ function App() {
     const handleTokenCheck = () => {
         if (localStorage.getItem('token')) {
             const token = localStorage.getItem('token');
-            return auth.checkToken(token)
+            auth.checkToken(token)
+                .then(res => {
+                    if (res) {
+                        handleLogin(res.email, token)
+                        navigate("/main", {replace: true})
+                    }
+                })
                 .catch(err => console.log(err))
         }
     }
 
     React.useEffect(() => {
-        handleTokenCheck()
-            .then((res) => {
-                if (res) {
-                    handleLogin(res.email)
-                    navigate('/main', {replace: true})
-                    return Promise.all([api.getUserInfo(), api.getInitialCards()])
-                }
-            })
+        Promise.all([api.getUserInfo(), api.getInitialCards()])
             .then(([userData, cards]) => {
                 setCurrentUser(userData);
                 setCards(cards)
             })
             .catch(err => console.log(err))
+        handleTokenCheck();
     }, []);
 
     const handleEditProfileClick = () => {
@@ -159,6 +157,8 @@ function App() {
             })
             .catch(err => console.log(err))
     }
+
+    const navigate = useNavigate();
 
     const handleRegister = (isRegisterSuccess) => {
         setIsInfoTooltipOpen(true);
