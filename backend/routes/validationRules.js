@@ -3,8 +3,7 @@ const { Joi } = require('celebrate');
 module.exports.cardDataValidationObject = {
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().min(2).max(30)
-      .regex(/^https?:\/\/(www\.)?[0-9a-zA-Z-._~:/?#[\]@!$&'()*+,;=]+#?/),
+    link: Joi.string().required().regex(/^https?:\/\/(www\.)?[0-9a-zA-Z-._~:/?#[\]@!$&'()*+,;=]+#?/),
   }),
 };
 
