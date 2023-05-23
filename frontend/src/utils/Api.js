@@ -85,7 +85,8 @@ class Api {
 const api = new Api({
   baseUrl: 'https://cards.me.nomoredomains.monster',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'authorization': localStorage.getItem('token')
   }
 });
 
