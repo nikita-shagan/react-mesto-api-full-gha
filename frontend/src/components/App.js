@@ -30,7 +30,7 @@ function App() {
     const [loggedIn, setLoggedIn] = React.useState(false);
     const [email, setEmail] = React.useState('');
 
-    const handleLogin = (email, token) => {
+    const handleLogin = (email) => {
         setLoggedIn(true);
         setEmail(email);
     }
@@ -41,28 +41,21 @@ function App() {
         localStorage.removeItem('token');
     }
 
-    const handleTokenCheck = () => {
-        if (localStorage.getItem('token')) {
-            const token = localStorage.getItem('token');
+    React.useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
             auth.checkToken(token)
-                .then(res => {
-                    if (res) {
-                        handleLogin(res.email, token)
-                        navigate("/main", {replace: true})
-                    }
+                .then(({ email }) => {
+                    handleLogin(email, token)
+                    navigate("/main", {replace: true})
+                    return Promise.all([api.getUserInfo(), api.getInitialCards()])
+                })
+                .then(([userData, cards]) => {
+                    setCurrentUser(userData);
+                    setCards(cards)
                 })
                 .catch(err => console.log(err))
         }
-    }
-
-    React.useEffect(() => {
-        Promise.all([api.getUserInfo(), api.getInitialCards()])
-            .then(([userData, cards]) => {
-                setCurrentUser(userData);
-                setCards(cards)
-            })
-            .catch(err => console.log(err))
-        handleTokenCheck();
     }, []);
 
     const handleEditProfileClick = () => {

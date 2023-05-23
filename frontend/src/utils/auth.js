@@ -17,6 +17,7 @@ export const register = (email, password) => {
         body: JSON.stringify({email, password})
     })
         .then(response => validateQuery(response))
+        .then((data) => data)
 };
 export const authorize = (email, password) => {
     return fetch(`${BASE_URL}/signin`, {
@@ -45,4 +46,5 @@ export const checkToken = (token) => {
         }
     })
         .then(res => validateQuery(res))
+        .then((data) => data)
 }
