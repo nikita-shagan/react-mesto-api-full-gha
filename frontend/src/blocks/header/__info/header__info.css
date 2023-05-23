@@ -1,0 +1,18 @@
+.header__info {
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 1024px) {
+    .header__info {
+        padding-right: 27px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .header__info {
+        flex-direction: column;
+    }
+}

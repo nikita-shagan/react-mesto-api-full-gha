@@ -1,0 +1,25 @@
+.auth__input {
+  border: none;
+  height: 27px;
+  border-bottom: 2px solid #CCCCCC;
+  font-family: 'Inter', 'Arial', 'Georgia', 'Tahoma', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: white;
+  text-align: left;
+  width: 100%;
+  background: transparent;
+  box-sizing: border-box;
+  padding: 0 0 13px;
+}
+
+.auth__input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px black inset;
+  -webkit-text-fill-color: white;
+}
+
+.auth__input:focus-visible {
+  outline: none;
+}

@@ -1,0 +1,7 @@
+.place__info {
+  background: #FFFFFF;
+  display: grid;
+  grid-template-columns: 1fr 50px;
+  align-items: center;
+  padding: 25px 20px 25px 21px;
+}

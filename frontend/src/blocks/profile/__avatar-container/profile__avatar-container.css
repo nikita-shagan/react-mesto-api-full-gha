@@ -1,0 +1,20 @@
+.profile__avatar-container {
+  display: block;
+  height: 120px;
+  width: 120px;
+  position: relative;
+  border-radius: 50%;
+}
+
+.profile__avatar-container:hover::after {
+  content: '';
+  color: white;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("../../../images/pencil.svg") rgba(0, 0, 0, .8) no-repeat center;
+  cursor: pointer;
+}

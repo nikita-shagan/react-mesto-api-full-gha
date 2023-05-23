@@ -1,0 +1,7 @@
+.popup__container_size_full {
+  max-width: 75vw;
+  max-height: 75vh;
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 100%;
+}

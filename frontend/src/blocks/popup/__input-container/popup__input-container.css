@@ -1,0 +1,14 @@
+.popup__input-container {
+  position: relative;
+  margin: 0 0 30px 0;
+  padding: 0;
+}
+
+.popup__input-container:first-of-type {
+  margin-top: 45px;
+}
+
+.popup__input-container:last-of-type {
+  margin-bottom: 0;
+}
+
