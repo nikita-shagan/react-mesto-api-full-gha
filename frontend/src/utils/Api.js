@@ -1,7 +1,13 @@
 class Api {
-  constructor(options) {
-    this._baseUrl = options.baseUrl;
-    this._headers = options.headers
+  constructor({ baseUrl }) {
+    this._baseUrl = baseUrl;
+  }
+
+  setHeaders() {
+    this._headers = {
+      'Content-Type': 'application/json',
+      'authorization': localStorage.getItem('token')
+    }
   }
 
   _validateQuery(res) {
@@ -84,10 +90,6 @@ class Api {
 
 const api = new Api({
   baseUrl: 'https://cards.me.nomoredomains.monster',
-  headers: {
-    'Content-Type': 'application/json',
-    'authorization': localStorage.getItem('token')
-  }
 });
 
 export default api;

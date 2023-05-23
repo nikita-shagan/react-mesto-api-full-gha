@@ -30,6 +30,32 @@ function App() {
     const [loggedIn, setLoggedIn] = React.useState(false);
     const [email, setEmail] = React.useState('');
 
+    const handleLogin = (email, token) => {
+        setLoggedIn(true);
+        setEmail(email);
+        api.setHeaders(token)
+    }
+
+    const handleSignOut = () => {
+        setLoggedIn(false);
+        setEmail('');
+        localStorage.removeItem('token');
+    }
+
+    const handleTokenCheck = () => {
+        if (localStorage.getItem('token')) {
+            const token = localStorage.getItem('token');
+            auth.checkToken(token)
+                .then(res => {
+                    if (res) {
+                        handleLogin(res.data.email, token)
+                        navigate("/main", {replace: true})
+                    }
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
     React.useEffect(() => {
         Promise.all([api.getUserInfo(), api.getInitialCards()])
             .then(([userData, cards]) => {
@@ -133,32 +159,7 @@ function App() {
             .catch(err => console.log(err))
     }
 
-    const handleLogin = (email) => {
-        setLoggedIn(true);
-        setEmail(email);
-    }
-
-    const handleSignOut = () => {
-        setLoggedIn(false);
-        setEmail('');
-        localStorage.removeItem('token');
-    }
-
     const navigate = useNavigate();
-
-    const handleTokenCheck = () => {
-        if (localStorage.getItem('token')) {
-            const token = localStorage.getItem('token');
-            auth.checkToken(token)
-                .then(res => {
-                    if (res) {
-                        handleLogin(res.data.email)
-                        navigate("/main", {replace: true})
-                    }
-                })
-                .catch(err => console.log(err))
-        }
-    }
 
     const handleRegister = (isRegisterSuccess) => {
         setIsInfoTooltipOpen(true);
