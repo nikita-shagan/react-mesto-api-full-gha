@@ -152,8 +152,7 @@ function App() {
             auth.checkToken(token)
                 .then(res => {
                     if (res) {
-                        setLoggedIn(true);
-                        setEmail(res.data.email);
+                        handleLogin(res.data.email)
                         navigate("/main", {replace: true})
                     }
                 })
