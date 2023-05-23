@@ -28,12 +28,7 @@ export const authorize = (email, password) => {
         body: JSON.stringify({email, password})
     })
         .then(response => validateQuery(response))
-        .then((data) => {
-            if (data.token){
-                localStorage.setItem('token', data.token);
-                return data;
-            }
-        })
+        .then((data) => data)
 };
 export const checkToken = (token) => {
     return fetch(`${BASE_URL}/users/me`, {
