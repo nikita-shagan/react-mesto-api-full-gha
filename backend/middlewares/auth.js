@@ -5,7 +5,7 @@ const extractBearerToken = (header) => header.replace('Bearer ', '');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports = (req, res, next) => {
-  const { jwtToken } = req.cookies;
+  const { authorization: jwtToken } = req.headers;
   if (!jwtToken) {
     next(new AuthError('Authorization required'));
     return;
