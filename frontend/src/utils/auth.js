@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'https://cards.me.nomoredomains.monster';
 
 const validateQuery = (res) => {
     if (res.ok) {

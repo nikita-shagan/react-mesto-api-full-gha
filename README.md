@@ -6,7 +6,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.23.215
+IP 158.160.23.215
 
 Frontend https://penstagram.nomoredomains.monster
 
