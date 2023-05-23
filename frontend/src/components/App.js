@@ -14,7 +14,6 @@ import {Route, Routes, Navigate} from 'react-router-dom';
 import Login from "./Login";
 import InfoTooltip from "./InfoTooltip";
 import Register from "./Register";
-import * as auth from '../utils/auth.js';
 import {useNavigate} from 'react-router-dom';
 
 function App() {
@@ -28,34 +27,37 @@ function App() {
     const [currentUser, setCurrentUser] = React.useState({});
     const [cards, setCards] = React.useState([]);
     const [loggedIn, setLoggedIn] = React.useState(false);
-    const [email, setEmail] = React.useState('');
+    const navigate = useNavigate();
 
-    const handleLogin = (email) => {
-        setLoggedIn(true);
-        setEmail(email);
+    const handleRegister = (isRegisterSuccess) => {
+        setIsInfoTooltipOpen(true);
+        setIsRegisterSuccess(isRegisterSuccess);
+    }
+
+    const handleLogin = () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            api.setHeaders(token);
+            Promise.all([api.getUserInfo(), api.getInitialCards()])
+                .then(([userData, cards]) => {
+                    setCurrentUser(userData);
+                    setCards(cards);
+                    setLoggedIn(true);
+                    navigate("/main", {replace: true});
+                })
+                .catch(err => console.log(err))
+        }
     }
 
     const handleSignOut = () => {
         setLoggedIn(false);
-        setEmail('');
+        setCurrentUser({});
+        setCards([]);
         localStorage.removeItem('token');
     }
 
     React.useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            auth.checkToken(token)
-                .then(({ email }) => {
-                    handleLogin(email, token)
-                    navigate("/main", {replace: true})
-                    return Promise.all([api.getUserInfo(), api.getInitialCards()])
-                })
-                .then(([userData, cards]) => {
-                    setCurrentUser(userData);
-                    setCards(cards)
-                })
-                .catch(err => console.log(err))
-        }
+        handleLogin();
     }, []);
 
     const handleEditProfileClick = () => {
@@ -151,18 +153,11 @@ function App() {
             .catch(err => console.log(err))
     }
 
-    const navigate = useNavigate();
-
-    const handleRegister = (isRegisterSuccess) => {
-        setIsInfoTooltipOpen(true);
-        setIsRegisterSuccess(isRegisterSuccess);
-    }
-
     return (
         <CardsContext.Provider value={cards}>
             <CurrentUserContext.Provider value={currentUser}>
                 <div className="page">
-                    <Header email={email} onSignOut={handleSignOut}/>
+                    <Header onSignOut={handleSignOut}/>
                     <Routes>
                         <Route
                             path="/"

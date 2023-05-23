@@ -3,10 +3,10 @@ class Api {
     this._baseUrl = baseUrl;
   }
 
-  _setHeaders() {
+  setHeaders(token) {
     this._headers = {
       'Content-Type': 'application/json',
-      'authorization': localStorage.getItem('token')
+      'authorization': token
     }
   }
 
@@ -18,7 +18,6 @@ class Api {
   }
 
   _processGetQuery(additionalUrl) {
-    this._setHeaders();
     return fetch(`${this._baseUrl}${additionalUrl}`, {
       headers: this._headers
     })
@@ -34,7 +33,6 @@ class Api {
   }
 
   updateUserInfo(data) {
-    this._setHeaders();
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -47,7 +45,6 @@ class Api {
   }
 
   addCard(data) {
-    this._setHeaders();
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
@@ -60,7 +57,6 @@ class Api {
   }
 
   deleteCard(cardId) {
-    this._setHeaders();
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
@@ -69,7 +65,6 @@ class Api {
   }
 
   toggleLike(isLiked, cardId) {
-    this._setHeaders();
     let method = 'PUT';
     if (isLiked) {
       method = 'DELETE'
@@ -82,7 +77,6 @@ class Api {
   }
 
   changeAvatar(link) {
-    this._setHeaders();
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,

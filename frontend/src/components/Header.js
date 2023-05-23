@@ -1,9 +1,11 @@
 import React from "react";
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../images/mesto-logo.svg';
+import {CurrentUserContext} from "../contexts/CurrentUserContext";
 
-function Header({ email, onSignOut }) {
+function Header({ onSignOut }) {
     const [headerInfo, setHeaderInfo] = React.useState({});
+    const currentUser = React.useContext(CurrentUserContext);
     const location = useLocation();
 
     const handleLinkClick = () => {
@@ -16,7 +18,7 @@ function Header({ email, onSignOut }) {
         let headerInfo = {};
         if (location.pathname === '/main') {
             headerInfo = {
-                email: email,
+                email: currentUser.hasOwnProperty('email') && currentUser.email,
                 link: '/sign-in',
                 linkText: 'Выйти'
             }

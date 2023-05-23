@@ -1,10 +1,9 @@
 import React from 'react';
-import {useNavigate, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import * as auth from '../utils/auth.js';
 import Auth from './Auth';
 
 const Login = ({ handleLogin }) => {
-    const navigate = useNavigate();
 
     const handleSubmit = (email, password) => {
         if (!email || !password){
@@ -13,8 +12,7 @@ const Login = ({ handleLogin }) => {
         auth.authorize(email, password)
             .then((data) => {
                 if (data && data.token) {
-                    handleLogin(email);
-                    navigate('/main', {replace: true});
+                    handleLogin();
                 } else {
                     alert("Неверный логин или пароль")
                 }
