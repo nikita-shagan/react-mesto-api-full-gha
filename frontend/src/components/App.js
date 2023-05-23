@@ -33,7 +33,6 @@ function App() {
     const handleLogin = (email, token) => {
         setLoggedIn(true);
         setEmail(email);
-        api.setHeaders(token)
     }
 
     const handleSignOut = () => {
