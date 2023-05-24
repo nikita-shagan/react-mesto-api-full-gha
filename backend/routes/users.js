@@ -3,7 +3,11 @@ const { celebrate } = require('celebrate');
 const {
   getUsers, getUserById, updateProfile, updateAvatar, getCurrentUser,
 } = require('../controllers/users');
-const { userIdValidationObject, userDataValidationObject, userAvatarValidationObject } = require('./validationRules');
+const {
+  userIdValidationObject,
+  userDataValidationObject,
+  userAvatarValidationObject,
+} = require('../middlewares/validationRules');
 
 router.get('/', getUsers);
 router.get('/me', getCurrentUser);

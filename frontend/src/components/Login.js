@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import * as auth from '../utils/auth.js';
 import Auth from './Auth';
 
-const Login = ({ handleLogin }) => {
+const Login = ({ handleLogin, handleLoginFail }) => {
 
     const handleSubmit = (email, password) => {
         if (!email || !password){
@@ -17,7 +17,10 @@ const Login = ({ handleLogin }) => {
                     alert("Неверный логин или пароль")
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                handleLoginFail();
+                console.log(err);
+            });
     }
 
     return (

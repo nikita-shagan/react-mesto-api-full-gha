@@ -22,7 +22,7 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
     const [isPopupPictureOpen, setIsPopupPictureOpen] = React.useState(false);
     const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-    const [isRegisterSuccess, setIsRegisterSuccess] = React.useState(false);
+    const [isTooltipSuccess, setIsTooltipSuccess] = React.useState(false);
     const [selectedCard, setSelectedCard] = React.useState({name: '', link: ''});
     const [currentUser, setCurrentUser] = React.useState({});
     const [cards, setCards] = React.useState([]);
@@ -31,7 +31,7 @@ function App() {
 
     const handleRegister = (isRegisterSuccess) => {
         setIsInfoTooltipOpen(true);
-        setIsRegisterSuccess(isRegisterSuccess);
+        setIsTooltipSuccess(isRegisterSuccess);
     }
 
     const handleLogin = () => {
@@ -47,6 +47,11 @@ function App() {
                 })
                 .catch(err => console.log(err))
         }
+    }
+
+    const handleLoginFail = () => {
+        setIsInfoTooltipOpen(true);
+        setIsTooltipSuccess(false);
     }
 
     const handleSignOut = () => {
@@ -178,8 +183,14 @@ function App() {
                                 />
                             }
                         />
-                        <Route path="/sign-in" element={<Login handleLogin={handleLogin}/>}/>
-                        <Route path="/sign-up" element={<Register handleRegister={handleRegister}/>}/>
+                        <Route
+                            path="/sign-in"
+                            element={<Login handleLoginFail={handleLoginFail} handleLogin={handleLogin}/>}
+                        />
+                        <Route
+                            path="/sign-up"
+                            element={<Register handleRegister={handleRegister}/>}
+                        />
                     </Routes>
                     <Footer/>
                     <EditProfilePopup
@@ -210,7 +221,7 @@ function App() {
                         isOpen={isInfoTooltipOpen}
                         onButtonClose={closeAllPopups}
                         onOverlayClose={closeAllPopupsByOverlay}
-                        isRegisterSuccess={isRegisterSuccess}
+                        isTooltipSuccess={isTooltipSuccess}
                     />
                 </div>
             </CurrentUserContext.Provider>

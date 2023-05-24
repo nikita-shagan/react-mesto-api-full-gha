@@ -3,7 +3,7 @@ const { celebrate } = require('celebrate');
 const {
   getCards, createCard, deleteCard, putLike, deleteLike,
 } = require('../controllers/cards');
-const { cardDataValidationObject, cardIdValidationObject } = require('./validationRules');
+const { cardDataValidationObject, cardIdValidationObject } = require('../middlewares/validationRules');
 
 router.get('/', getCards);
 router.post('/', celebrate(cardDataValidationObject), createCard);

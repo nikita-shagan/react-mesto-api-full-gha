@@ -13,12 +13,22 @@ const handleErrors = require('./middlewares/handleErrors');
 const corsHandler = require('./middlewares/corsHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { NotFoundError } = require('./errors/NotFoundError');
+const rateLimit = require('express-rate-limit');
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
 
 mongoose.connect('mongodb://0.0.0.0:27017/mestodb');
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use(limiter);
 
 app.use(helmet());
 app.use(express.json());
