@@ -1,4 +1,5 @@
 require('dotenv').config();
+const rateLimit = require('express-rate-limit');
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
@@ -13,7 +14,6 @@ const handleErrors = require('./middlewares/handleErrors');
 const corsHandler = require('./middlewares/corsHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { NotFoundError } = require('./errors/NotFoundError');
-const rateLimit = require('express-rate-limit');
 
 const { PORT = 3000 } = process.env;
 
